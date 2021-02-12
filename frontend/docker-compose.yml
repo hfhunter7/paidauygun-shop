@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  app-client:
+    environment:
+      - NEXT_PUBLIC_ENDPOINT=http://localhost:8080/api/v1
+    ports:
+      - 80:80
+    build:
+      args:
+        NEXT_PUBLIC_ENDPOINT: http://localhost:8080/api/v1
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:
