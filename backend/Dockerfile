@@ -1,5 +1,5 @@
 # Use official base image of Java Runtim
-FROM openjdk:8-jdk-alpine
+FROM adoptopenjdk/openjdk11:alpine-jre
 
 # Set volume point to /tmp
 VOLUME /tmp
@@ -8,11 +8,10 @@ VOLUME /tmp
 EXPOSE 80
 
 # Set application's JAR file
-ARG JAR_FILE=target/report-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/backend-0.0.1-SNAPSHOT.jar
 
 # Add the application's JAR file to the container
 ADD ${JAR_FILE} app.jar
-COPY assets/fonts/THSarabunNew.ttf /
 
 # Run the JAR file
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]

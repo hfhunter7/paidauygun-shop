@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  app-server:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-backend:3306/paiduaygun?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=12345678
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db-backend
+
+  db-backend:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  mysql:
+  vhost:
